@@ -35,6 +35,7 @@ const css = `
 class ReadabilityWebView extends Component {
   static defaultProps = {
     url: '',
+    html: '',
     htmlCss: css,
     title: '',
     onError: null,
@@ -54,18 +55,26 @@ class ReadabilityWebView extends Component {
       return;
     }
     try {
-      const response = await fetch(url);
-      const html = await response.text();
       let cleanHtml = '';
-
-      const readabilityArticle = await Readability.cleanHtml(html, url);
-
-      if(!readabilityArticle) {
-        cleanHtml = false;
-      } else if (htmlCss) {
-        cleanHtml = cleanHtmlTemplate(htmlCss, title || readabilityArticle.title, readabilityArticle.content);
+      if(!this.props.html) {
+        const response = await fetch(url);
+        const html = await response.text();
+  
+        const readabilityArticle = await Readability.cleanHtml(html, url);
+  
+        if(!readabilityArticle) {
+          cleanHtml = false;
+        } else if (htmlCss) {
+          cleanHtml = cleanHtmlTemplate(htmlCss, title || readabilityArticle.title, readabilityArticle.content);
+        } else {
+          cleanHtml = cleanHtmlTemplate(cleanHtmlCss, title || readabilityArticle.title, readabilityArticle.content);
+        }
       } else {
-        cleanHtml = cleanHtmlTemplate(cleanHtmlCss, title || readabilityArticle.title, readabilityArticle.content);
+        if (htmlCss) {
+          cleanHtml = cleanHtmlTemplate(htmlCss, title || readabilityArticle.title, readabilityArticle.content);
+        } else {
+          cleanHtml = cleanHtmlTemplate(cleanHtmlCss, title || readabilityArticle.title, readabilityArticle.content);
+        }
       }
 
       this.setState({
