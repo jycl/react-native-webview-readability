@@ -32,7 +32,7 @@ const css = `
   }
 `;
 
-export default class ReadabilityWebView extends Component {
+class ReadabilityWebView extends Component {
   static defaultProps = {
     url: '',
     htmlCss: css,
@@ -118,3 +118,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+module.exports = {
+  ReadabilityWebView,
+  Readability,
+  cleanHtmlTemplate,
+  cleanHtmlCss,
+}
