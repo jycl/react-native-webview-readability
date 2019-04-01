@@ -71,9 +71,9 @@ class ReadabilityWebView extends Component {
         }
       } else {
         if (htmlCss) {
-          cleanHtml = cleanHtmlTemplate(htmlCss, title || '', html);
+          cleanHtml = cleanHtmlTemplate(htmlCss, title || '', this.props.html);
         } else {
-          cleanHtml = cleanHtmlTemplate(cleanHtmlCss, title || '', html);
+          cleanHtml = cleanHtmlTemplate(cleanHtmlCss, title || '', this.props.html);
         }
       }
 
